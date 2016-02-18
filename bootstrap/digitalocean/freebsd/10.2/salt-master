@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+  echo "Usage: $0 ssh-profile"
+  exit 1
+fi
+
+ssh $1 "sudo pkg upgrade -y"
+ssh $1 "sudo pkg install -y py27-salt"
+ssh $1 "sudo sysrc salt_master_enable=YES"
+ssh $1 "sudo cp /usr/local/etc/salt/master.sample /usr/local/etc/salt/master"
+ssh $1 "sudo service salt_master start"
